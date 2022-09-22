@@ -27,11 +27,10 @@ string Huff(int n, AVL &Tree, ofstream &outFS);
 //=======================================================================//
 int main()
 {
-
 // Changeable dataset (CHANGE ONLY HAPPENS HERE)
-    int n = 4;
-    vector<char> S = {'a', 'b', 'c', 'd'};
-    vector<int> P = {7, 9, 11, 12};
+    int n = 5;
+    vector<char> S = {'c', 'a', 'b', 'e', 'd'};
+    vector<int> P = {1, 2, 7, 9, 15};
 
 // To output the huffman encoding
     ofstream outFS("results.txt");
@@ -42,12 +41,12 @@ int main()
         Tree.insert(P[i], S[i]);
 
 // Run algorithm
-    string swag = Huff(n, Tree, outFS);
+    string ggez = Huff(n, Tree, outFS);
 
+// END DRIVER CODE
     outFS.close();
     return 0;
-}
-
+} 
 //=======================================================================//
 //Define Functions
 string Huff(int n, AVL &Tree, ofstream &outFS)
