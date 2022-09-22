@@ -28,10 +28,10 @@ string Huff(int n, AVL &Tree, ofstream &outFS);
 int main()
 {
 
-// Changeable dataset
-    int n = 5;
-    vector<char> S = {'c', 'a', 'b', 'e', 'd'};
-    vector<int> P = {1, 2, 7, 9, 15};
+// Changeable dataset (CHANGE ONLY HAPPENS HERE)
+    int n = 4;
+    vector<char> S = {'a', 'b', 'c', 'd'};
+    vector<int> P = {7, 9, 11, 12};
 
 // To output the huffman encoding
     ofstream outFS("results.txt");
@@ -40,13 +40,9 @@ int main()
     AVL Tree;
     for(int i=0; i < P.size(); i++)
         Tree.insert(P[i], S[i]);
-    //Tree.display();
 
-    
-
-    
-
-
+// Run algorithm
+    string swag = Huff(n, Tree, outFS);
 
     outFS.close();
     return 0;
@@ -64,35 +60,44 @@ string Huff(int n, AVL &Tree, ofstream &outFS)
     // Recursive Case
     else if (n >= 2)
     {
-         
-        /*  
-            char x = min of tree, then remove from tree
-            char y = min of tree, then remove from tree
-            insert node of x + y for key and '$' for symbol
-        */
+        // Remove first min
+        node* temp = Tree.getMinNode();
+        char x = temp->symbol;
+        int min1 = temp->key;
+        Tree.remove(min1);
+
+        // Remove second min
+        temp = Tree.getMinNode();
+        char y = temp->symbol;
+        int min2 = temp->key;
+        Tree.remove(min2);
+
+        // Add sum back as a node into tree with dummy symbol '$'
+        Tree.insert(min1 + min2, '$');
+
+        // Used to keep track of path as a string of 0s and/or 1s
+        string append = Huff(n-1, Tree, outFS);
         
-        //string append = Huff(n-1, Tree, outFS);
-        
-        /*
-            if both symbols are not '$'
-                print(x, ":" + 0 or 1 + append)
-                print(y, ":" + 0 or 1 + append)
-                return "0";
-
-            if x is '$' and y is not
-                print(y, ":" + 0 + append)
-                return "0" + append;
-            
-            if y is '$' and x is not
-                print(x, ":" + 1 + append)
-                return "1" + append;
-
-            if both symbols are '$'
-                return "1";
-
-        */
-
+        if (x != '$' && y != '$')
+        {
+            outFS << x << ": 1" + append << endl;
+            outFS << y << ": 0" + append << endl;
+            return "0";
+        }
+        else if (x == '$' && y != '$')
+        {
+            outFS << y << ": 0" + append << endl;
+            return "0" + append;
+        }
+        else if (y == '$' && x != '$')
+        {
+            outFS << x << ": 1" + append << endl;
+            return "1" + append;
+        }
+        else if (x == '$' && y == '$')
+        {
+            return "1";
+        }
     }
-
 
 }

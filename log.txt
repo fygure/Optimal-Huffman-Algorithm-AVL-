@@ -5,7 +5,6 @@ A1_Question_7 Huffman with AVL
 
 
 NOTE: removed below from code
-
 //UNCOMMENT IF MAP IS NEEDED
     // To keep track of S (Symbols) and P (Probabilities) for later
     // map<char, int> Map;
@@ -14,3 +13,64 @@ NOTE: removed below from code
 
     // for(auto i = Map.begin(); i!= Map.end(); i++)
     //     cout << i->first << ": " << i->second << endl;
+
+
+NOTE: removed below from code as it was to help with debugging
+//UNCOMMENT IF DEBUGGING NEEDED
+    // Tree.display();
+    // node* temp = Tree.getMinNode();
+    // int min1 = temp->key;
+    // char x = temp->symbol;
+    // Tree.remove(min1);
+    
+    // temp = Tree.getMinNode();
+    // int min2 = temp->key;
+    // char y = temp->symbol;
+    // Tree.remove(min2);
+    // cout << endl;
+    // Tree.display();
+
+
+NOTE: pseudocode for huffman algo
+string Huff(int n, AVL &Tree, ofstream &outFS)
+{
+    // Base Case
+    if (n == 1)
+    {
+        return "";
+    }
+    // Recursive Case
+    else if (n >= 2)
+    {
+         
+        /*  
+            char x = min of tree, then remove from tree
+            char y = min of tree, then remove from tree
+            insert node of x + y for key and '$' for symbol
+        */
+        
+        //string append = Huff(n-1, Tree, outFS);
+        
+        /*
+            if both symbols are not '$'
+                print(x, ":" + 0 or 1 + append)
+                print(y, ":" + 0 or 1 + append)
+                return "0";
+
+            if x is '$' and y is not
+                print(y, ":" + 0 + append)
+                return "0" + append;
+            
+            if y is '$' and x is not
+                print(x, ":" + 1 + append)
+                return "1" + append;
+
+            if both symbols are '$'
+                return "1";
+
+        */
+
+    }
+
+
+}
