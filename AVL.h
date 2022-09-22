@@ -9,6 +9,7 @@ struct node
   node* left;
   node* right;
   int key;
+  char symbol;
   int height;
   node() {left = nullptr; right = nullptr; height = 0;}
 };
@@ -17,20 +18,23 @@ class AVL
 {
 private:
   node* root;
-  node* insertPrivate(node* ptr, int key);
+  node* insertPrivate(node* ptr, int key, char symbol);
   void displayPrivate(node* root);
+  int getMinPrivate(node* root);
   int getHeight(node* ptr);
   node* singleLeftRotate(node* &ptr);
   node* singleRightRotate(node* &ptr);
   node* doubleLeftRotate(node* &ptr);
   node* doubleRightRotate(node* &ptr);
+  
 
 public:
   AVL() {root = nullptr;}
-  node* createLeaf(int key);
-  void insert(int key) {root = insertPrivate(root, key);}
+  node* createLeaf(int key, char symbol);
+  void insert(int key, char symbol) {root = insertPrivate(root, key, symbol);}
   void remove(int key);
   void display() {displayPrivate(root);}
+  int getMin() {return getMinPrivate(root);}
 
 };
 /////////////////////////////////////////////////////
@@ -76,22 +80,23 @@ int AVL::getHeight(node* ptr)
     return ptr->height;
 }
 /////////////////////////////////////////////////////
-node* AVL::createLeaf(int key)
+node* AVL::createLeaf(int key, char symbol)
 {
   node* newnode = new node();
   newnode->key = key;
+  newnode->symbol = symbol;
   return newnode;
 }
 /////////////////////////////////////////////////////
-node* AVL::insertPrivate(node* ptr, int key)
+node* AVL::insertPrivate(node* ptr, int key, char symbol)
 {
   if (ptr == nullptr)
   {
-    ptr = createLeaf(key);
+    ptr = createLeaf(key, symbol);
   }
   else if (key > ptr->key)
   {
-    ptr->right = insertPrivate(ptr->right, key);
+    ptr->right = insertPrivate(ptr->right, key, symbol);
     if (getHeight(ptr->left) - getHeight(ptr->right) == 2)
     {
       if (key < ptr->left->key)
@@ -102,7 +107,7 @@ node* AVL::insertPrivate(node* ptr, int key)
   }
   else if (key < ptr->key)
   {
-    ptr->left = insertPrivate(ptr->left, key);
+    ptr->left = insertPrivate(ptr->left, key, symbol);
     if (getHeight(ptr->left) - getHeight(ptr->right) == 2)
     {
       if (key > ptr->right->key)
@@ -122,10 +127,17 @@ void AVL::displayPrivate(node* root)
     return;
 
   displayPrivate(root->left);
-  cout << root->key << endl;
+  cout << root->symbol << ": " << root->key << endl;
   displayPrivate(root->right);
 }
 /////////////////////////////////////////////////////
+int AVL::getMinPrivate(node* root)
+{
+  if (root->left == nullptr)
+    return root->key;
+  
+  getMinPrivate(root->left);
+}
 /////////////////////////////////////////////////////
 /////////////////////////////////////////////////////
 /////////////////////////////////////////////////////
