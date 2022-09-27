@@ -8,9 +8,6 @@
     This program is the implementation of my design of the algorithm
     to get the huffman encoding in O(nlog(base2)n) time complexity.
 */
-
-
-
 // Includes
 //=======================================================================//
 #include <iostream>
@@ -18,11 +15,9 @@
 #include <fstream>
 #include <map>
 #include "AVL.h"
-
 // Functions
 //=======================================================================//
 string Huff(int n, AVL &Tree, ofstream &outFS);
-
 // Driver Code
 //=======================================================================//
 int main()
@@ -81,7 +76,7 @@ string Huff(int n, AVL &Tree, ofstream &outFS)
         {
             outFS << x << ": 1" + append << endl;
             outFS << y << ": 0" + append << endl;
-            return "0";
+            return append;
         }
         else if (x == '$' && y != '$')
         {
@@ -95,7 +90,7 @@ string Huff(int n, AVL &Tree, ofstream &outFS)
         }
         else if (x == '$' && y == '$')
         {
-            return "1";
+            return append;
         }
     }
 
